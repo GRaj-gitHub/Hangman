@@ -25,7 +25,7 @@ public class Main_Game : MonoBehaviour
     [SerializeField]
     private Image[] img = new Image[6];
     public List<string> answer_set = new List<string>();
-    private bool work = true; //to set button not interactable;
+    
     
    
     int guessed;         // to find the index of the guessed word
@@ -42,7 +42,6 @@ public class Main_Game : MonoBehaviour
     { 
        buttonPrefab.SetActive(true); 
        TextAsset temp_text = Resources.Load("wordlist") as TextAsset; //loading the text file from the folder to temp_text
-       Debug.Log(temp_text.text);
        word_dict = temp_text.text;
        for(int i = 0; i < word_dict.Length; i++)
        {
@@ -72,8 +71,6 @@ public class Main_Game : MonoBehaviour
     {
         answer = answer_set[Random.Range(0, count - 1)];
         Debug.Log("answer =  " + answer);
-        Debug.Log(answer.Length);
-        Debug.Log(options);
         for (int i = 0; i < answer.Length - 1; i++)
         {
             GameObject blankTemp = Instantiate(blankPrefab,letterContainer);
@@ -98,10 +95,9 @@ public class Main_Game : MonoBehaviour
     public void getGuess(string guess)
     {
 
-        Debug.Log(guess);
+        
         // Finding the index of the guessed charecter in the answer; if not present index is -1
         guessed = answer.IndexOf(guess);
-        Debug.Log(guessed);
        if (guessed == -1)
        {
            hang();
@@ -115,7 +111,6 @@ public class Main_Game : MonoBehaviour
             {
                 if (answer[j] == guess[0])
                 {
-                   Debug.Log("letter found " + j +" position");
                    option2 = letterContainer.transform.Find("blank" + j) as Transform;  
                    option2.GetComponentInChildren<Text>().text = answer[guessed] + ""; 
                    score_count++;
@@ -125,7 +120,6 @@ public class Main_Game : MonoBehaviour
                        scores = PlayerPrefs.GetInt("Score");
                        scores++;
                        PlayerPrefs.SetInt("Score", scores);
-                       Debug.Log("total score = " + scores);
                        disable_buttons();
                    }                  
                 }
